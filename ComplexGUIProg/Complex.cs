@@ -35,7 +35,14 @@ public class Complex
     rP = r;
     iP = i;
     polarMagnitude = Math.Sqrt(rP * rP + iP * iP);
-    polarAngle = Math.Atan(iP / rP);
+    if (rP == 0 && iP > 0)
+      polarAngle = Math.PI / 2;
+    else if (rP == 0 && iP < 0)
+      polarAngle = -Math.PI / 2;
+    else if (rP == 0 && iP == 0)
+      polarAngle = 0;
+    else
+      polarAngle = Math.Atan(iP / rP);
   }
 
   public static Complex[] SquareRootsOfi()
@@ -46,7 +53,7 @@ public class Complex
     //i^(1/2) = (re^(i*pi*theta))^1/2 = r^(1/2) * (e^(i*pi*(theta/2))) = r^(1/2) * (-1^(theta/2))
     var deg = 90;
     var magnitude = 1;
-    var newDeg = (deg / 2)*(Math.PI / 180);
+    var newDeg = (deg / 2) * (Math.PI / 180);
     var newMagnitude = Math.Sqrt(magnitude);
     var rootOne = new Complex(newMagnitude * Math.Cos(newDeg), newMagnitude * Math.Sin(newDeg));
     var rootTwo = new Complex(-newMagnitude * Math.Cos(newDeg), -newMagnitude * Math.Sin(newDeg));
