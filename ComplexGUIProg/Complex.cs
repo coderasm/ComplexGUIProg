@@ -34,7 +34,7 @@ public class Complex
   {
     rP = r;
     iP = i;
-    polarMagnitude = Math.Sqrt(rP * rP + iP * iP);
+    polarMagnitude = (double)(int)(1000 * Math.Sqrt(rP * rP + iP * iP))/1000;
     if (rP == 0 && iP > 0)
       polarAngle = Math.PI / 2;
     else if (rP == 0 && iP < 0)
@@ -148,10 +148,10 @@ public class Complex
     if (isUndefined || c1.isUndefined || isZero(c1))
       return new Complex(null);
     // use the formula (a+bj) / (c+dj) = (1/(c^2 + d^2)) * (ac+bd) + (1/(c^2 + d^2)) * (bc - ad)j
-    var realPart = (1 / (c1.rP * c1.rP + c1.iP * c1.iP)) * (rP * c1.rP + iP * c1.iP);
-    var imaginaryPart = (1 / (c1.rP * c1.rP + c1.iP * c1.iP)) * (iP * c1.rP - rP * c1.iP);
+    var realPart = (int)(1000 * (1 / (c1.rP * c1.rP + c1.iP * c1.iP)) * (rP * c1.rP + iP * c1.iP));
+    var imaginaryPart = (int)(1000 * (1 / (c1.rP * c1.rP + c1.iP * c1.iP)) * (iP * c1.rP - rP * c1.iP));
     //return a new complex number to prevent mutation of other two complex numbers
-    return new Complex(realPart, imaginaryPart);
+    return new Complex((double)realPart / 1000, (double)imaginaryPart / 1000);
   }
 
   public static Complex divTwo(Complex c1, Complex c2)
@@ -161,10 +161,10 @@ public class Complex
     if (c1.isUndefined || c2.isUndefined || isZero(c2))
       return new Complex(null);
     // use the formula (a+bj) / (c+dj) = (1/(c^2 + d^2)) * (ac+bd) + (1/(c^2 + d^2)) * (bc - ad)j
-    var realPart = (1 / (c2.rP * c2.rP + c2.iP * c2.iP)) * (c1.rP * c2.rP + c1.iP * c2.iP);
-    var imaginaryPart = (1 / (c2.rP * c2.rP + c2.iP * c2.iP)) * (c1.iP * c2.rP - c1.rP * c2.iP);
+    var realPart = (int)(1000 * (1 / (c2.rP * c2.rP + c2.iP * c2.iP)) * (c1.rP * c2.rP + c1.iP * c2.iP));
+    var imaginaryPart = (int)(1000 * (1 / (c2.rP * c2.rP + c2.iP * c2.iP)) * (c1.iP * c2.rP - c1.rP * c2.iP));
     //return a new complex number to prevent mutation of other two complex numbers
-    return new Complex(realPart, imaginaryPart);
+    return new Complex((double)(realPart) /1000, (double)(imaginaryPart) / 1000);
   }
 
   private static bool isZero(Complex c)
@@ -195,7 +195,8 @@ public class Complex
   {
     if (isUndefined)
       return "Undefined";
-    return polarMagnitude + "e^(j" + (polarAngle * (180 / Math.PI)) + ")";
+    var finalAngle = (double)(int)(1000 * (polarAngle * (180 / Math.PI))) / 1000;
+    return polarMagnitude + "e^(j" + finalAngle + ")";
   }
 
 }
